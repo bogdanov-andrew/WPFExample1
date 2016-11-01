@@ -8,6 +8,19 @@
             <local:Person FirstName="f1" LastName="l1" Tel="t1"></local:Person>
             <local:Person FirstName="f2" LastName="l2" Tel="t2"></local:Person>
         </collections:ArrayList>
+        
+        <Style x:Key="ListViewCustomStyle" TargetType="ListView">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding LastName}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </Window.Resources>
     
     <Grid>
@@ -17,28 +30,40 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Height="70" Orientation="Vertical">
-            <Slider HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Width="211" x:Name="MySlider"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="{Binding Value, ElementName=MySlider, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-            <!--Button Content="Button" HorizontalAlignment="Left" Margin="252,10,0,0" VerticalAlignment="Top" Width="75"/-->
-        </StackPanel>
+        <GroupBox Grid.Row="0">
+            <GroupBox.Header>
+                <TextBlock Text="Binding Example" FontWeight="Bold"/>
+            </GroupBox.Header>
+            <StackPanel  Height="170" Orientation="Vertical">
+                <Slider HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Width="211" x:Name="MySlider"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="{Binding Value, ElementName=MySlider, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+                <TextBlock Margin="10" Text="{Binding ExampleText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                <Button Margin="10" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Command="{Binding TestCommand}"/>
+            </StackPanel>
+        </GroupBox>
 
-        <StackPanel Grid.Row="1" Margin="10">
-            <TextBlock>Test1</TextBlock>
-            <TextBlock>Test2</TextBlock>
-            <TextBlock>Test3</TextBlock>
-        </StackPanel>
 
+        <GroupBox Grid.Row="1">
+            <GroupBox.Header>
+                <TextBlock Text="Stack Panel Example" FontWeight="Bold"/>
+            </GroupBox.Header>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock>Test1</TextBlock>
+                <TextBlock>Test2</TextBlock>
+                <TextBlock>Test3</TextBlock>
+            </StackPanel>
+        </GroupBox>
+        
         <StackPanel Grid.Row="2">
             <!-- ItemsSource="{DynamicResource PersonList}" -->
-            <ListView HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="300" x:Name="MyGridView" ItemsSource="{Binding PersonList}">
-                <ListView.View>
+            <ListView HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="300" x:Name="MyGridView" ItemsSource="{Binding PersonList}" Style="{StaticResource ListViewCustomStyle}">
+                <!--ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=LastName}" Header="Last Name" />
                         <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" Header="First Name" />
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Tel}" Header="Tel" />
                     </GridView>
-                </ListView.View>
+                </ListView.View-->
             </ListView>
         </StackPanel>
 
